@@ -9,8 +9,10 @@ Project goals, training results, and the roadmap (ONNX baseline → pruning → 
 ```
 model/      Fine-tuned PyTorch checkpoint (safetensors, config, tokenizer)
 onnx/       ONNX export of the checkpoint (model.onnx, config, tokenizer)
-scripts/    코드.py (fine-tuning), export_onnx.py (ONNX export and check)
-results/    결과.txt (fine-tuning log)
+scripts/    train.py (fine-tuning), export_onnx.py (ONNX export and check),
+            benchmark.py (PyTorch vs ONNX speed/memory/accuracy),
+            baseline_eval.py (before vs after fine-tuning)
+results/    result.txt (fine-tuning log), benchmark/, baseline_eval.json
 docs/       Project documentation
 ```
 

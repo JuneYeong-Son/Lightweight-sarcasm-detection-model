@@ -1,0 +1,115 @@
+{
+  "timestamp": "2026-11-10T13:21:09",
+  "device": {
+    "name": "pc",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "machine": "AMD64",
+    "cpu_count": 12,
+    "python": "3.13.5"
+  },
+  "settings": {
+    "threads": 4,
+    "split": "validation",
+    "max_length": 256,
+    "latency_samples": 32,
+    "warmup": 5,
+    "runs": 50,
+    "batch_size": 8,
+    "eval": true,
+    "eval_limit": null
+  },
+  "results": [
+    {
+      "backend": "pytorch",
+      "files": [
+        "model\\model.safetensors"
+      ],
+      "file_size_mb": 422.00350189208984,
+      "load_seconds": 1.8235155000002123,
+      "latency_ms": {
+        "mean": 98.09431399800815,
+        "median": 95.5174499831628,
+        "p90": 133.37079000775702,
+        "min": 41.33099998580292,
+        "max": 170.29149999143556,
+        "std": 25.21443133520056
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 102.96875,
+        "seq_len_max": 173
+      },
+      "versions": {
+        "numpy": "2.4.6",
+        "transformers": "5.22.1",
+        "torch": "2.6.0+cu124"
+      },
+      "eval": {
+        "split": "validation",
+        "samples": 1321,
+        "accuracy": 0.7585162755488266,
+        "f1": 0.8272874932322686,
+        "precision": 0.7304015296367112,
+        "recall": 0.9538077403245943,
+        "seconds": 131.22724879998714,
+        "samples_per_second": 10.066506857988243
+      },
+      "memory_mb": {
+        "before_load": 493.8203125,
+        "after_load": 1030.08984375,
+        "model_load_increase": 536.26953125,
+        "peak": 1168.796875
+      }
+    },
+    {
+      "backend": "onnx",
+      "files": [
+        "onnx\\model.onnx"
+      ],
+      "file_size_mb": 422.1971616744995,
+      "load_seconds": 0.7626653999905102,
+      "latency_ms": {
+        "mean": 69.67245600186288,
+        "median": 64.63805001112632,
+        "p90": 100.441080017481,
+        "min": 31.508999993093312,
+        "max": 132.10689998231828,
+        "std": 20.06297754769925
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 102.96875,
+        "seq_len_max": 173
+      },
+      "versions": {
+        "numpy": "2.4.6",
+        "transformers": "5.22.1",
+        "onnxruntime": "1.31.1"
+      },
+      "eval": {
+        "split": "validation",
+        "samples": 1321,
+        "accuracy": 0.7585162755488266,
+        "f1": 0.8272874932322686,
+        "precision": 0.7304015296367112,
+        "recall": 0.9538077403245943,
+        "seconds": 109.05103179998696,
+        "samples_per_second": 12.113594692280188
+      },
+      "memory_mb": {
+        "before_load": 494.33203125,
+        "after_load": 943.85546875,
+        "model_load_increase": 449.5234375,
+        "peak": 1060.76171875
+      }
+    }
+  ],
+  "agreement": {
+    "backends": [
+      "pytorch",
+      "onnx"
+    ],
+    "prediction_agreement": 1.0,
+    "max_logit_diff": 4.351139068603516e-06
+  }
+}
