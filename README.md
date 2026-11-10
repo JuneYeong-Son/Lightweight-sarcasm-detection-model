@@ -2,6 +2,18 @@
 
 This repository contains a fine-tuned Korean RoBERTa sequence-classification model. The ONNX export uses the local model files and can be run without downloading a checkpoint.
 
+Project goals, training results, and the roadmap (ONNX baseline → pruning → quantization) are described in [docs/PROJECT.md](docs/PROJECT.md).
+
+## Folder layout
+
+```
+model/      Fine-tuned PyTorch checkpoint (safetensors, config, tokenizer)
+onnx/       ONNX export of the checkpoint (model.onnx, config, tokenizer)
+scripts/    코드.py (fine-tuning), export_onnx.py (ONNX export and check)
+results/    결과.txt (fine-tuning log)
+docs/       Project documentation
+```
+
 ## Export to ONNX
 
 Install the export and inference dependencies:
@@ -10,16 +22,16 @@ Install the export and inference dependencies:
 python -m pip install -r requirements-onnx.txt
 ```
 
-Export the checkpoint in this directory to `onnx\model.onnx`:
+Export the checkpoint in `model\` to `onnx\model.onnx`:
 
 ```powershell
-python export_onnx.py
+python scripts\export_onnx.py
 ```
 
 To select other paths or a different maximum input length:
 
 ```powershell
-python export_onnx.py --model-dir . --output-dir onnx --max-length 256
+python scripts\export_onnx.py --model-dir model --output-dir onnx --max-length 256
 ```
 
 The exported graph accepts dynamic batch and sequence lengths and returns classification logits. The script checks the graph and compares ONNX Runtime CPU output against PyTorch before reporting success. It also saves the tokenizer and model configuration alongside the ONNX file.

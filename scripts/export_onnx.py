@@ -22,6 +22,9 @@ class ClassificationLogits(torch.nn.Module):
         ).logits
 
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Export the local sarcasm classifier to ONNX and verify it with ONNX Runtime."
@@ -29,14 +32,14 @@ def main() -> None:
     parser.add_argument(
         "--model-dir",
         type=Path,
-        default=Path(__file__).resolve().parent,
-        help="Directory containing the fine-tuned model and tokenizer.",
+        default=PROJECT_ROOT / "model",
+        help="Directory containing the fine-tuned model and tokenizer (default: model/).",
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=None,
-        help="Directory for model.onnx and tokenizer files (default: MODEL_DIR/onnx).",
+        default=PROJECT_ROOT / "onnx",
+        help="Directory for model.onnx and tokenizer files (default: onnx/).",
     )
     parser.add_argument(
         "--max-length",
@@ -50,11 +53,7 @@ def main() -> None:
         parser.error("--max-length must be at least 2")
 
     model_dir = args.model_dir.resolve()
-    output_dir = (
-        args.output_dir.resolve()
-        if args.output_dir is not None
-        else model_dir / "onnx"
-    )
+    output_dir = args.output_dir.resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     onnx_path = output_dir / "model.onnx"
 
