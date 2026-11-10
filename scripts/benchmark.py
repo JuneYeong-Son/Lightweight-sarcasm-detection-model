@@ -21,15 +21,17 @@ import unicodedata
 from datetime import datetime
 from pathlib import Path
 
-# scripts/ 폴더의 파일(예: code.py)이 같은 이름의 표준 모듈을 가리지 않도록
-# 스크립트 폴더를 import 경로에서 뺀다.
+# scripts/ 폴더의 파일이 같은 이름의 표준 모듈을 가리지 않도록, 스크립트 폴더를
+# import 경로 맨 뒤로 옮긴다 (표준 모듈이 먼저, metrics.py는 그다음에 찾는다).
 _SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path[:] = [p for p in sys.path if Path(p or ".").resolve() != _SCRIPT_DIR]
+sys.path.append(str(_SCRIPT_DIR))
 
 import numpy as np  # noqa: E402
 
+from metrics import LABEL_MAP, compute_metrics  # noqa: E402
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-LABEL_MAP = {"Non-Sarcasm": 0, "Sarcasm": 1}
 BACKENDS = ("pytorch", "onnx")
 
 
@@ -121,7 +123,7 @@ def load_split(split: str, limit):
 
 
 def encode(tokenizer, contexts, responses, max_length):
-    # 코드.py 학습 때와 같은 방식: context/response 문장쌍, token_type_ids 제외
+    # train.py 학습 때와 같은 방식: context/response 문장쌍, token_type_ids 제외
     enc = tokenizer(
         contexts,
         responses,
@@ -295,28 +297,19 @@ def run_backend(backend: str, args) -> dict:
                 log(f"평가 {end_idx}/{total}")
         eval_seconds = time.perf_counter() - t0
 
-        labels_arr = np.asarray(labels)
-        preds_arr = np.asarray(predictions)
-        tp = int(((preds_arr == 1) & (labels_arr == 1)).sum())
-        fp = int(((preds_arr == 1) & (labels_arr == 0)).sum())
-        fn = int(((preds_arr == 0) & (labels_arr == 1)).sum())
-        precision = tp / (tp + fp) if tp + fp else 0.0
-        recall = tp / (tp + fn) if tp + fn else 0.0
-        f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
-
+        metrics = compute_metrics(labels, predictions)
         result["eval"] = {
             "split": args.split,
             "samples": total,
-            "accuracy": float((preds_arr == labels_arr).mean()),
-            "f1": f1,
-            "precision": precision,
-            "recall": recall,
+            **metrics,
+            "f1": metrics["f1_sarcasm"],
             "seconds": eval_seconds,
             "samples_per_second": total / eval_seconds,
         }
         result["_predictions"] = predictions
         result["_logits"] = np.concatenate(all_logits).tolist()
-        log(f"정확도 {result['eval']['accuracy']:.4f}, F1 {f1:.4f}")
+        log(f"정확도 {metrics['accuracy']:.4f}, F1 {metrics['f1_sarcasm']:.4f}, "
+            f"BA {metrics['balanced_accuracy']:.4f}")
 
     result["memory_mb"] = {
         "before_load": rss_before,
@@ -376,7 +369,9 @@ def print_summary(results):
         ("로드 후 메모리 증가 (MB)", lambda r: fmt(r["memory_mb"]["model_load_increase"], ".0f")),
         ("최대 메모리 (MB)", lambda r: fmt(r["memory_mb"]["peak"], ".0f")),
         ("정확도", lambda r: fmt(r.get("eval", {}).get("accuracy"), ".4f")),
-        ("F1", lambda r: fmt(r.get("eval", {}).get("f1"), ".4f")),
+        ("F1(S)", lambda r: fmt(r.get("eval", {}).get("f1"), ".4f")),
+        ("BA", lambda r: fmt(r.get("eval", {}).get("balanced_accuracy"), ".4f")),
+        ("Macro-F1", lambda r: fmt(r.get("eval", {}).get("macro_f1"), ".4f")),
         ("평가 처리량 (개/초)", lambda r: fmt(r.get("eval", {}).get("samples_per_second"), ".2f")),
     ]
     names = [r["backend"] for r in results]

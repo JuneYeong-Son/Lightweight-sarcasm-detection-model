@@ -1,0 +1,88 @@
+{
+  "timestamp": "2026-11-10T14:21:16",
+  "device": {
+    "name": "pc_t1_latency",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "machine": "AMD64",
+    "cpu_count": 12,
+    "python": "3.13.5"
+  },
+  "settings": {
+    "threads": 1,
+    "split": "validation",
+    "max_length": 256,
+    "latency_samples": 32,
+    "warmup": 5,
+    "runs": 50,
+    "batch_size": 8,
+    "eval": false,
+    "eval_limit": null
+  },
+  "results": [
+    {
+      "backend": "pytorch",
+      "files": [
+        "model\\model.safetensors"
+      ],
+      "file_size_mb": 422.00350189208984,
+      "load_seconds": 2.5759778000065126,
+      "latency_ms": {
+        "mean": 235.7727159978822,
+        "median": 223.86300002108328,
+        "p90": 303.4363699844107,
+        "min": 111.53140000533313,
+        "max": 368.5443999711424,
+        "std": 54.090017520694445
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 102.96875,
+        "seq_len_max": 173
+      },
+      "versions": {
+        "numpy": "2.4.6",
+        "transformers": "5.22.1",
+        "torch": "2.6.0+cu124"
+      },
+      "memory_mb": {
+        "before_load": 493.8515625,
+        "after_load": 1028.64453125,
+        "model_load_increase": 534.79296875,
+        "peak": 1062.0625
+      }
+    },
+    {
+      "backend": "onnx",
+      "files": [
+        "onnx\\model.onnx"
+      ],
+      "file_size_mb": 422.1971616744995,
+      "load_seconds": 0.9638898999546655,
+      "latency_ms": {
+        "mean": 188.7853339978028,
+        "median": 180.9357000165619,
+        "p90": 245.321999990847,
+        "min": 75.91939996927977,
+        "max": 334.69200000399724,
+        "std": 50.834767616830206
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 102.96875,
+        "seq_len_max": 173
+      },
+      "versions": {
+        "numpy": "2.4.6",
+        "transformers": "5.22.1",
+        "onnxruntime": "1.31.1"
+      },
+      "memory_mb": {
+        "before_load": 492.78125,
+        "after_load": 940.09765625,
+        "model_load_increase": 447.31640625,
+        "peak": 1031.9609375
+      }
+    }
+  ],
+  "agreement": null
+}

@@ -17,11 +17,12 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-# scripts/ 폴더의 파일(예: code.py)이 같은 이름의 표준 모듈을 가리지 않도록 한다.
+# scripts/ 폴더의 파일이 같은 이름의 표준 모듈을 가리지 않도록, 스크립트 폴더를
+# import 경로 맨 뒤로 옮긴다 (표준 모듈이 먼저, metrics.py는 그다음에 찾는다).
 _SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path[:] = [p for p in sys.path if Path(p or ".").resolve() != _SCRIPT_DIR]
+sys.path.append(str(_SCRIPT_DIR))
 
-import numpy as np  # noqa: E402
 import torch  # noqa: E402
 from datasets import load_dataset  # noqa: E402
 from transformers import (  # noqa: E402
@@ -29,43 +30,10 @@ from transformers import (  # noqa: E402
     AutoTokenizer,
 )
 
+from metrics import LABEL_MAP, METRIC_KEYS, compute_metrics  # noqa: E402
+
 PROJECT_ROOT = _SCRIPT_DIR.parent
-LABEL_MAP = {"Non-Sarcasm": 0, "Sarcasm": 1}
 ID2LABEL = {0: "Non-Sarcasm", 1: "Sarcasm"}
-METRIC_KEYS = (
-    "accuracy", "f1_sarcasm", "balanced_accuracy", "macro_f1", "weighted_f1",
-    "precision_s", "recall_s", "precision_n", "recall_n",
-)
-
-
-def compute_metrics(labels, preds) -> dict:
-    labels = np.asarray(labels)
-    preds = np.asarray(preds)
-    per_class = {}
-    for cls in (0, 1):
-        tp = int(((preds == cls) & (labels == cls)).sum())
-        fp = int(((preds == cls) & (labels != cls)).sum())
-        fn = int(((preds != cls) & (labels == cls)).sum())
-        precision = tp / (tp + fp) if tp + fp else 0.0
-        recall = tp / (tp + fn) if tp + fn else 0.0
-        f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
-        per_class[cls] = {
-            "precision": precision, "recall": recall, "f1": f1,
-            "support": int((labels == cls).sum()),
-        }
-    total = len(labels)
-    return {
-        "accuracy": float((preds == labels).mean()),
-        "f1_sarcasm": per_class[1]["f1"],  # 코드.py에서 쓰던 F1 (Sarcasm 기준 이진 F1)
-        "balanced_accuracy": (per_class[0]["recall"] + per_class[1]["recall"]) / 2,
-        "macro_f1": (per_class[0]["f1"] + per_class[1]["f1"]) / 2,
-        "weighted_f1": sum(per_class[c]["f1"] * per_class[c]["support"] for c in (0, 1)) / total,
-        "precision_s": per_class[1]["precision"],
-        "recall_s": per_class[1]["recall"],
-        "precision_n": per_class[0]["precision"],
-        "recall_n": per_class[0]["recall"],
-        "predicted_sarcasm_ratio": float((preds == 1).mean()),
-    }
 
 
 def encode_batches(tokenizer, split, max_length, batch_size):
@@ -74,7 +42,7 @@ def encode_batches(tokenizer, split, max_length, batch_size):
     batches = []
     for start in range(0, len(data), batch_size):
         chunk = data[start:start + batch_size]
-        # 코드.py 학습 때와 같은 방식: context/response 문장쌍, token_type_ids 제외
+        # train.py 학습 때와 같은 방식: context/response 문장쌍, token_type_ids 제외
         enc = tokenizer(
             chunk["context"], chunk["response"],
             truncation=True, max_length=max_length,
