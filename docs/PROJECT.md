@@ -14,11 +14,18 @@
 ## 진행 단계
 
 1. **Full fine-tuning** (완료): [train.py](../scripts/train.py)
-2. **ONNX 변환 및 기준 성능 측정** (진행 중): [export_onnx.py](../scripts/export_onnx.py), 브랜치 `feature/origin-onnx`
-3. **Pruning** (예정)
-4. **양자화** (예정)
+2. **ONNX 변환 및 기준 성능 측정** (완료): [export_onnx.py](../scripts/export_onnx.py), 브랜치 `feature/origin-onnx`
+3. **경량화 변형 5종 비교** (진행 중): [VARIANT_COMPARISON.md](VARIANT_COMPARISON.md)
 
-2단계는 경량화를 하기 전에 원본 모델을 ONNX로 변환해서 **기준(baseline) 성능**을 확보하는 단계다. 3·4단계 결과는 모두 이 기준과 비교한다.
+| # | 변형 | 상태 |
+|---|---|---|
+| ① | ONNX fp32 (기준) | 완료 |
+| ② | Dynamic INT8 | 완료 ([quantize_onnx.py](../scripts/quantize_onnx.py), 브랜치 `feature/prunning_x_DynInt8`) |
+| ③ | Pruning + Dynamic INT8 | 예정 |
+| ④ | Pruning + QAT | 예정 |
+| ⑤ | QAT (pruning 없음) | 예정 |
+
+2단계는 경량화를 하기 전에 원본 모델을 ONNX로 변환해서 **기준(baseline) 성능**을 확보하는 단계다. 3단계의 모든 변형은 이 기준(① ONNX fp32)과 비교한다.
 
 ## 1단계: Fine-tuning
 
@@ -111,5 +118,6 @@ ONNX fp32는 원본과 같은 연산이므로 정확도는 거의 같아야 한�
 |---|---|
 | `main` | 학습 코드, 학습 결과, fine-tuned 모델 (모두 루트에 있음) |
 | `feature/origin-onnx` | 원본 모델의 ONNX 변환과 기준 성능 측정. 폴더 구조를 `model/`, `onnx/`, `scripts/`, `results/`, `docs/`로 정리함 |
+| `feature/prunning_x_DynInt8` | ② Dynamic INT8 양자화(`onnx-int8/`)와 5종 비교 문서 |
 
 대용량 파일(`*.safetensors`, `*.onnx`, `*.onnx.data`)은 Git LFS로 관리한다 ([.gitattributes](../.gitattributes)).
