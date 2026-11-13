@@ -1,0 +1,92 @@
+{
+  "timestamp": "2026-11-13T19:04:27",
+  "device": {
+    "name": "pc_int8_t1_latency",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "machine": "AMD64",
+    "cpu_count": 12,
+    "python": "3.13.5"
+  },
+  "settings": {
+    "backends": [
+      "onnx",
+      "onnx-int8"
+    ],
+    "threads": 1,
+    "split": "validation",
+    "max_length": 256,
+    "latency_samples": 32,
+    "warmup": 5,
+    "runs": 50,
+    "batch_size": 8,
+    "eval": false,
+    "eval_limit": null
+  },
+  "results": [
+    {
+      "backend": "onnx",
+      "files": [
+        "onnx\\model.onnx"
+      ],
+      "file_size_mb": 422.1971616744995,
+      "load_seconds": 0.6514462999766693,
+      "latency_ms": {
+        "mean": 154.5417339890264,
+        "median": 146.26274997135624,
+        "p90": 209.21424998668954,
+        "min": 61.703499988652766,
+        "max": 255.20270003471524,
+        "std": 40.470373971597525
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 102.96875,
+        "seq_len_max": 173
+      },
+      "versions": {
+        "numpy": "2.4.6",
+        "transformers": "5.22.1",
+        "onnxruntime": "1.31.1"
+      },
+      "memory_mb": {
+        "before_load": 496.66796875,
+        "after_load": 943.96875,
+        "model_load_increase": 447.30078125,
+        "peak": 1035.5625
+      }
+    },
+    {
+      "backend": "onnx-int8",
+      "files": [
+        "onnx-int8\\model.onnx"
+      ],
+      "file_size_mb": 106.24839973449707,
+      "load_seconds": 0.24912270007189363,
+      "latency_ms": {
+        "mean": 89.99754599295557,
+        "median": 84.63399996981025,
+        "p90": 125.33985008485615,
+        "min": 33.35440007504076,
+        "max": 152.9591999715194,
+        "std": 25.056830025541487
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 102.96875,
+        "seq_len_max": 173
+      },
+      "versions": {
+        "numpy": "2.4.6",
+        "transformers": "5.22.1",
+        "onnxruntime": "1.31.1"
+      },
+      "memory_mb": {
+        "before_load": 496.92578125,
+        "after_load": 639.3125,
+        "model_load_increase": 142.38671875,
+        "peak": 659.1875
+      }
+    }
+  ],
+  "agreement": null
+}
