@@ -6,6 +6,7 @@
 PC와 Android(Termux + proot-distro Ubuntu)에서 같은 방식으로 실행한다.
     python scripts/benchmark.py
     python scripts/benchmark.py --no-eval --threads 4
+    python scripts/benchmark.py --backends onnx onnx-int8   # 양자화 전후 비교
 """
 
 import argparse
@@ -32,7 +33,8 @@ import numpy as np  # noqa: E402
 from metrics import LABEL_MAP, compute_metrics  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-BACKENDS = ("pytorch", "onnx")
+BACKENDS = ("pytorch", "onnx", "onnx-int8")
+DEFAULT_BACKENDS = ("pytorch", "onnx")
 
 
 # ============================
@@ -178,11 +180,15 @@ class OnnxRunner:
         )[0]
 
 
+def onnx_dir(backend: str, args) -> Path:
+    return args.onnx_int8_dir if backend == "onnx-int8" else args.onnx_dir
+
+
 def model_files(backend: str, args):
     if backend == "pytorch":
         return sorted(args.model_dir.glob("*.safetensors"))
-    onnx_path = args.onnx_dir / "model.onnx"
-    return [onnx_path] + sorted(args.onnx_dir.glob("model.onnx.data"))
+    directory = onnx_dir(backend, args)
+    return [directory / "model.onnx"] + sorted(directory.glob("model.onnx.data"))
 
 
 def library_versions(backend: str):
@@ -228,7 +234,7 @@ def run_backend(backend: str, args) -> dict:
     if backend == "pytorch":
         runner = TorchRunner(args.model_dir, args.threads)
     else:
-        runner = OnnxRunner(args.onnx_dir / "model.onnx", args.threads)
+        runner = OnnxRunner(onnx_dir(backend, args) / "model.onnx", args.threads)
     load_seconds = time.perf_counter() - start
     rss_after_load = current_rss_mb()
     log(f"모델 로드 {load_seconds:.1f}초")
@@ -383,9 +389,11 @@ def print_summary(results):
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--backends", nargs="+", choices=BACKENDS, default=list(BACKENDS))
+    parser.add_argument("--backends", nargs="+", choices=BACKENDS, default=list(DEFAULT_BACKENDS),
+                        help="측정할 모델 (기본: pytorch onnx). 예측 일치율은 첫 번째 모델 기준.")
     parser.add_argument("--model-dir", type=Path, default=PROJECT_ROOT / "model")
     parser.add_argument("--onnx-dir", type=Path, default=PROJECT_ROOT / "onnx")
+    parser.add_argument("--onnx-int8-dir", type=Path, default=PROJECT_ROOT / "onnx-int8")
     parser.add_argument("--threads", type=int, default=4,
                         help="추론 스레드 수 (기본 4). 폰은 큰 코어 수에 맞추는 것이 보통 빠르다.")
     parser.add_argument("--split", choices=("validation", "test"), default="validation")
@@ -407,6 +415,7 @@ def main() -> None:
     args = parser.parse_args()
     args.model_dir = args.model_dir.resolve()
     args.onnx_dir = args.onnx_dir.resolve()
+    args.onnx_int8_dir = args.onnx_int8_dir.resolve()
 
     if args.child:
         result = run_backend(args.child, args)
@@ -434,31 +443,34 @@ def main() -> None:
             )
             results.append(json.loads(out.read_text(encoding="utf-8")))
 
-    # 백엔드 간 예측 일치율 (같은 데이터로 평가했을 때)
-    agreement = None
+    # 백엔드 간 예측 일치율 (같은 데이터로 평가했을 때, 첫 번째 백엔드 기준)
+    # 비교 쌍이 1개면 dict(이전 결과 파일과 같은 형식), 2개 이상이면 dict 목록으로 저장한다.
+    pairs = []
     evaluated = [r for r in results if "_predictions" in r]
-    if len(evaluated) == 2:
-        a, b = evaluated
+    for b in evaluated[1:]:
+        a = evaluated[0]
         same = np.mean(np.asarray(a["_predictions"]) == np.asarray(b["_predictions"]))
         diff = np.abs(np.asarray(a["_logits"]) - np.asarray(b["_logits"])).max()
-        agreement = {
+        pairs.append({
             "backends": [a["backend"], b["backend"]],
             "prediction_agreement": float(same),
             "max_logit_diff": float(diff),
-        }
+        })
+    agreement = pairs[0] if len(pairs) == 1 else (pairs or None)
     for r in results:
         r.pop("_predictions", None)
         r.pop("_logits", None)
 
     print_summary(results)
-    if agreement:
-        print(f"\n예측 일치율: {agreement['prediction_agreement']:.4f}, "
-              f"최대 logit 차이: {agreement['max_logit_diff']:.2e}")
+    for pair in pairs:
+        print(f"\n예측 일치율 ({pair['backends'][0]} vs {pair['backends'][1]}): "
+              f"{pair['prediction_agreement']:.4f}, 최대 logit 차이: {pair['max_logit_diff']:.2e}")
 
     report = {
         "timestamp": datetime.now().isoformat(timespec="seconds"),
         "device": device_info(args.device_name),
         "settings": {
+            "backends": args.backends,
             "threads": args.threads,
             "split": args.split,
             "max_length": args.max_length,
