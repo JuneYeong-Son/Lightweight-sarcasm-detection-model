@@ -14,10 +14,6 @@ from transformers import (
 )
 from sklearn.metrics import accuracy_score, f1_score
 
-# ============================
-# 1. 설정
-# ============================
-
 MODEL_NAME = "klue/roberta-base"
 MAX_LENGTH = 256
 
@@ -46,11 +42,6 @@ def get_recovery_epochs(ratio):
 
 device = torch.device("cpu")
 print("디바이스:", device, flush=True)
-
-# ============================
-# 2. 데이터셋 (이번엔 train도 필요 - 회복 학습용)
-# ============================
-
 print("KoCoSa 데이터셋 로딩 중...", flush=True)
 dataset = load_dataset("YuminKim/KoCoSa")
 
@@ -100,9 +91,7 @@ val_loader = DataLoader(
     collate_fn=collator
 )
 
-# ============================
-# 3. 평가 함수
-# ============================
+# 평가함수
 
 def evaluate(model):
     model.eval()
@@ -119,9 +108,7 @@ def evaluate(model):
     f1 = f1_score(true_labels, predictions, average="binary", zero_division=0)
     return accuracy, f1
 
-# ============================
-# 4. 프루닝 대상 모듈 (prune_sweep.py와 동일)
-# ============================
+# 프루닝 대상 모듈
 
 def get_prunable_modules(model):
     modules = []
@@ -157,9 +144,7 @@ def density(model):
         nonzero += (w != 0).sum().item()
     return nonzero / total
 
-# ============================
-# 5. 비율별: 프루닝 -> 회복 학습(N epoch) -> 제일 좋았던 epoch 선택 -> 영구 반영 -> 저장
-# ============================
+# 비율별: 프루닝 -> 회복 학습(N epoch) -> 제일 좋았던 epoch 선택 -> 영구 반영 -> 저장
 
 results = []
 
@@ -255,9 +240,7 @@ for ratio in PRUNE_RATIOS:
         json.dump(results, f, ensure_ascii=False, indent=2)
     print(f"  -> 결과표 갱신: {RECOVER_SAVE_DIR / 'prune_recover_results.json'}", flush=True)
 
-# ============================
-# 6. 전체 결과 요약 (콘솔 출력용, 저장은 이미 비율마다 끝났음)
-# ============================
+#    결과 정리
 
 print("\n===== 전체 결과 (회복학습 전 -> 후) =====")
 print(f"{'비율':>6} | {'Acc(전)':>8} | {'F1(전)':>8} | {'Acc(후)':>8} | {'F1(후)':>8} | {'밀도':>7}")
