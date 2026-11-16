@@ -1,0 +1,74 @@
+[
+  {
+    "prune_ratio": 0.1,
+    "recovery_epochs": 5,
+    "accuracy_before_recovery": 0.7600302800908403,
+    "f1_before_recovery": 0.8281842818428184,
+    "accuracy_after_recovery": 0.7600302800908403,
+    "f1_after_recovery": 0.8281842818428184,
+    "density": 0.900000087662702
+  },
+  {
+    "prune_ratio": 0.2,
+    "recovery_epochs": 5,
+    "accuracy_before_recovery": 0.7630582891748675,
+    "f1_before_recovery": 0.8299837045084193,
+    "accuracy_after_recovery": 0.7630582891748675,
+    "f1_after_recovery": 0.8299837045084193,
+    "density": 0.799999956168649
+  },
+  {
+    "prune_ratio": 0.3,
+    "recovery_epochs": 5,
+    "accuracy_before_recovery": 0.7660862982588947,
+    "f1_before_recovery": 0.8321564367191744,
+    "accuracy_after_recovery": 0.7660862982588947,
+    "f1_after_recovery": 0.8321564367191744,
+    "density": 0.700000043831351
+  },
+  {
+    "prune_ratio": 0.4,
+    "recovery_epochs": 5,
+    "accuracy_before_recovery": 0.7592732778198334,
+    "f1_before_recovery": 0.8239202657807309,
+    "accuracy_after_recovery": 0.7592732778198334,
+    "f1_after_recovery": 0.8239202657807309,
+    "density": 0.599999912337298
+  },
+  {
+    "prune_ratio": 0.5,
+    "recovery_epochs": 5,
+    "accuracy_before_recovery": 0.7547312641937926,
+    "f1_before_recovery": 0.8146453089244852,
+    "accuracy_after_recovery": 0.7698713096139288,
+    "f1_after_recovery": 0.8297872340425532,
+    "density": 0.5
+  },
+  {
+    "prune_ratio": 0.6,
+    "recovery_epochs": 5,
+    "accuracy_before_recovery": 0.607115821347464,
+    "f1_before_recovery": 0.7553041018387553,
+    "accuracy_after_recovery": 0.7623012869038607,
+    "f1_after_recovery": 0.8265193370165745,
+    "density": 0.40000008766270195
+  },
+  {
+    "prune_ratio": 0.7,
+    "recovery_epochs": 5,
+    "accuracy_before_recovery": 0.6063588190764573,
+    "f1_before_recovery": 0.7549481621112158,
+    "accuracy_after_recovery": 0.7441332323996972,
+    "f1_after_recovery": 0.8209745762711864,
+    "density": 0.299999956168649
+  },
+  {
+    "prune_ratio": 0.8,
+    "recovery_epochs": 7,
+    "accuracy_before_recovery": 0.44965934897804694,
+    "f1_before_recovery": 0.30959164292497626,
+    "accuracy_after_recovery": 0.720666161998486,
+    "f1_after_recovery": 0.8110599078341014,
+    "density": 0.20000004383135098
+  }
+]
