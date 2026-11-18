@@ -7,6 +7,7 @@ PC와 Android(Termux + proot-distro Ubuntu)에서 같은 방식으로 실행한�
     python scripts/benchmark.py
     python scripts/benchmark.py --no-eval --threads 4
     python scripts/benchmark.py --backends onnx onnx-int8   # 양자화 전후 비교
+    python scripts/benchmark.py --backends onnx onnx-int8 onnx-pruned-int8   # ③ Pruning + DynINT8 포함
 """
 
 import argparse
@@ -33,7 +34,7 @@ import numpy as np  # noqa: E402
 from metrics import LABEL_MAP, compute_metrics  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-BACKENDS = ("pytorch", "onnx", "onnx-int8")
+BACKENDS = ("pytorch", "onnx", "onnx-int8", "onnx-pruned-int8")
 DEFAULT_BACKENDS = ("pytorch", "onnx")
 
 
@@ -181,7 +182,10 @@ class OnnxRunner:
 
 
 def onnx_dir(backend: str, args) -> Path:
-    return args.onnx_int8_dir if backend == "onnx-int8" else args.onnx_dir
+    return {
+        "onnx-int8": args.onnx_int8_dir,
+        "onnx-pruned-int8": args.onnx_pruned_int8_dir,
+    }.get(backend, args.onnx_dir)
 
 
 def model_files(backend: str, args):
@@ -259,7 +263,7 @@ def run_backend(backend: str, args) -> dict:
 
     result = {
         "backend": backend,
-        "files": [str(p.relative_to(PROJECT_ROOT)) for p in model_files(backend, args)],
+        "files": [os.path.relpath(p, PROJECT_ROOT) for p in model_files(backend, args)],
         "file_size_mb": sum(p.stat().st_size for p in model_files(backend, args)) / 1024**2,
         "load_seconds": load_seconds,
         "latency_ms": {
@@ -394,6 +398,8 @@ def main() -> None:
     parser.add_argument("--model-dir", type=Path, default=PROJECT_ROOT / "model")
     parser.add_argument("--onnx-dir", type=Path, default=PROJECT_ROOT / "onnx")
     parser.add_argument("--onnx-int8-dir", type=Path, default=PROJECT_ROOT / "onnx-int8")
+    parser.add_argument("--onnx-pruned-int8-dir", type=Path, default=PROJECT_ROOT / "onnx-pruned-int8",
+                        help="③ Pruning + DynINT8 모델 폴더 (prunning_o_DynINT8 브랜치에서 생성)")
     parser.add_argument("--threads", type=int, default=4,
                         help="추론 스레드 수 (기본 4). 폰은 큰 코어 수에 맞추는 것이 보통 빠르다.")
     parser.add_argument("--split", choices=("validation", "test"), default="validation")
@@ -416,6 +422,7 @@ def main() -> None:
     args.model_dir = args.model_dir.resolve()
     args.onnx_dir = args.onnx_dir.resolve()
     args.onnx_int8_dir = args.onnx_int8_dir.resolve()
+    args.onnx_pruned_int8_dir = args.onnx_pruned_int8_dir.resolve()
 
     if args.child:
         result = run_backend(args.child, args)

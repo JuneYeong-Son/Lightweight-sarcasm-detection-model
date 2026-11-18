@@ -1,0 +1,193 @@
+{
+  "timestamp": "2026-11-18T17:33:42",
+  "device": {
+    "name": "pc_pruned_int8_t4_validation",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "machine": "AMD64",
+    "cpu_count": 12,
+    "python": "3.13.5"
+  },
+  "settings": {
+    "backends": [
+      "onnx",
+      "onnx-int8",
+      "onnx-pruned-int8"
+    ],
+    "threads": 4,
+    "split": "validation",
+    "max_length": 256,
+    "latency_samples": 32,
+    "warmup": 5,
+    "runs": 50,
+    "batch_size": 8,
+    "eval": true,
+    "eval_limit": null
+  },
+  "results": [
+    {
+      "backend": "onnx",
+      "files": [
+        "onnx\\model.onnx"
+      ],
+      "file_size_mb": 422.1971616744995,
+      "load_seconds": 0.7232088998425752,
+      "latency_ms": {
+        "mean": 70.7752399938181,
+        "median": 69.3865999346599,
+        "p90": 94.73840994760394,
+        "min": 31.74210013821721,
+        "max": 120.73500012047589,
+        "std": 18.434887038230187
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 102.96875,
+        "seq_len_max": 173
+      },
+      "versions": {
+        "numpy": "2.4.6",
+        "transformers": "5.22.1",
+        "onnxruntime": "1.31.1"
+      },
+      "eval": {
+        "split": "validation",
+        "samples": 1321,
+        "accuracy": 0.7585162755488266,
+        "f1_sarcasm": 0.8272874932322686,
+        "balanced_accuracy": 0.705750024008451,
+        "macro_f1": 0.7130148157985243,
+        "weighted_f1": 0.7373226298476402,
+        "precision_s": 0.7304015296367112,
+        "recall_s": 0.9538077403245943,
+        "precision_n": 0.8654545454545455,
+        "recall_n": 0.4576923076923077,
+        "predicted_sarcasm_ratio": 0.7918243754731265,
+        "f1": 0.8272874932322686,
+        "seconds": 108.56438779993914,
+        "samples_per_second": 12.16789434150653
+      },
+      "memory_mb": {
+        "before_load": 494.0390625,
+        "after_load": 943.50390625,
+        "model_load_increase": 449.46484375,
+        "peak": 1061.390625
+      }
+    },
+    {
+      "backend": "onnx-int8",
+      "files": [
+        "onnx-int8\\model.onnx"
+      ],
+      "file_size_mb": 106.24839973449707,
+      "load_seconds": 0.2754348001908511,
+      "latency_ms": {
+        "mean": 37.398965982720256,
+        "median": 36.63970006164163,
+        "p90": 52.10376000031829,
+        "min": 11.052200105041265,
+        "max": 57.786199962720275,
+        "std": 10.417562604221528
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 102.96875,
+        "seq_len_max": 173
+      },
+      "versions": {
+        "numpy": "2.4.6",
+        "transformers": "5.22.1",
+        "onnxruntime": "1.31.1"
+      },
+      "eval": {
+        "split": "validation",
+        "samples": 1321,
+        "accuracy": 0.761544284632854,
+        "f1_sarcasm": 0.830736163353036,
+        "balanced_accuracy": 0.7065603092288486,
+        "macro_f1": 0.7137035490260699,
+        "weighted_f1": 0.7385984503325631,
+        "precision_s": 0.7292452830188679,
+        "recall_s": 0.9650436953807741,
+        "precision_n": 0.89272030651341,
+        "recall_n": 0.4480769230769231,
+        "predicted_sarcasm_ratio": 0.8024224072672218,
+        "f1": 0.830736163353036,
+        "seconds": 65.58218209980987,
+        "samples_per_second": 20.142666158767987
+      },
+      "memory_mb": {
+        "before_load": 493.75,
+        "after_load": 640.05078125,
+        "model_load_increase": 146.30078125,
+        "peak": 777.91796875
+      }
+    },
+    {
+      "backend": "onnx-pruned-int8",
+      "files": [
+        "..\\Base_model_ver2\\onnx-pruned-int8\\model.onnx"
+      ],
+      "file_size_mb": 106.27577590942383,
+      "load_seconds": 0.41031519998796284,
+      "latency_ms": {
+        "mean": 39.743888010270894,
+        "median": 39.6053500007838,
+        "p90": 51.994240074418485,
+        "min": 17.07709999755025,
+        "max": 65.38649997673929,
+        "std": 9.998906486089455
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 102.96875,
+        "seq_len_max": 173
+      },
+      "versions": {
+        "numpy": "2.4.6",
+        "transformers": "5.22.1",
+        "onnxruntime": "1.31.1"
+      },
+      "eval": {
+        "split": "validation",
+        "samples": 1321,
+        "accuracy": 0.757002271006813,
+        "f1_sarcasm": 0.8225538971807629,
+        "balanced_accuracy": 0.7105733218092769,
+        "macro_f1": 0.7185998777620501,
+        "weighted_f1": 0.7407127312493009,
+        "precision_s": 0.7380952380952381,
+        "recall_s": 0.9288389513108615,
+        "precision_n": 0.8178913738019169,
+        "recall_n": 0.49230769230769234,
+        "predicted_sarcasm_ratio": 0.7630582891748675,
+        "f1": 0.8225538971807629,
+        "seconds": 69.5012003001757,
+        "samples_per_second": 19.00686598640888
+      },
+      "memory_mb": {
+        "before_load": 494.06640625,
+        "after_load": 641.75,
+        "model_load_increase": 147.68359375,
+        "peak": 730.734375
+      }
+    }
+  ],
+  "agreement": [
+    {
+      "backends": [
+        "onnx",
+        "onnx-int8"
+      ],
+      "prediction_agreement": 0.987887963663891,
+      "max_logit_diff": 1.3781660199165344
+    },
+    {
+      "backends": [
+        "onnx",
+        "onnx-pruned-int8"
+      ],
+      "prediction_agreement": 0.9348978046934141,
+      "max_logit_diff": 2.329187296330929
+    }
+  ]
+}
