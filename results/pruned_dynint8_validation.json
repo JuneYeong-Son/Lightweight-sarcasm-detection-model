@@ -1,0 +1,28 @@
+{
+  "timestamp": "2026-11-18T16:54:22",
+  "split": "validation",
+  "samples": 1321,
+  "threads": 4,
+  "onnxruntime": "1.31.1",
+  "results": {
+    "pruned-fp32": {
+      "accuracy": 0.7623012869038607,
+      "f1_sarcasm": 0.8265193370165745,
+      "macro_f1": 0.7245577454313642,
+      "balanced_accuracy": 0.7159548160952656,
+      "latency_ms_mean_batch1": 76.01697799749672,
+      "latency_ms_median_batch1": 73.06435005739331,
+      "file_size_mb": 422.1931104660034
+    },
+    "pruned-int8": {
+      "accuracy": 0.757002271006813,
+      "f1_sarcasm": 0.8225538971807629,
+      "macro_f1": 0.7185998777620501,
+      "balanced_accuracy": 0.7105733218092769,
+      "latency_ms_mean_batch1": 41.75407401751727,
+      "latency_ms_median_batch1": 41.329449974000454,
+      "file_size_mb": 106.27577590942383
+    }
+  },
+  "prediction_agreement": 0.9841029523088569
+}

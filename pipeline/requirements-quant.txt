@@ -1,0 +1,4 @@
+torch>=2.6
+transformers>=4.36,<4.58
+optimum-onnx[onnxruntime]
+onnxruntime>=1.20
