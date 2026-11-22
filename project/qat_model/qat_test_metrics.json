@@ -1,0 +1,29 @@
+{
+  "dataset": "YuminKim/KoCoSa",
+  "split": "test",
+  "sample_count": 1037,
+  "max_length": 256,
+  "baseline_pytorch_fp32": {
+    "accuracy": 75.12054001928641,
+    "BA": 72.783162402795,
+    "M-F1": 72.52015184756083,
+    "F1(S)": 80.97345132743364
+  },
+  "qat_fake_quant": {
+    "accuracy": 75.02410800385728,
+    "BA": 73.95300349374507,
+    "M-F1": 74.17533232374223,
+    "F1(S)": 78.85714285714286
+  },
+  "qat_weights_fp32": {
+    "accuracy": 75.40983606557377,
+    "BA": 74.32322776963822,
+    "M-F1": 74.5556732664979,
+    "F1(S)": 79.21760391198043
+  },
+  "agreement_vs_pytorch_fp32_percent": 87.36740597878494,
+  "fake_quantized_linear_layers": 74,
+  "weight_quantization": "INT8 per-channel symmetric",
+  "activation_quantization": "INT8 per-token asymmetric",
+  "note": "These are PyTorch test metrics, not final ONNX INT8 runtime metrics."
+}
