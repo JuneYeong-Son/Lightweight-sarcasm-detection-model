@@ -1,0 +1,218 @@
+{
+  "timestamp": "2026-11-25T16:12:58",
+  "device": {
+    "name": "galaxy-se3",
+    "platform": "Linux-6.17.0-PRoot-Distro-aarch64-with-glibc2.43",
+    "machine": "aarch64",
+    "cpu_count": 8,
+    "cpu_max_mhz": [
+      1824,
+      1824,
+      1824,
+      1824,
+      2515,
+      2515,
+      2515,
+      2803
+    ],
+    "python": "3.14.4",
+    "versions": {
+      "onnxruntime": "1.31.1",
+      "tokenizers": "0.23.3",
+      "numpy": "2.5.4"
+    },
+    "battery": {
+      "capacity_percent": null,
+      "status": null
+    },
+    "temperature_c": {
+      "max_zone": null,
+      "battery": null
+    },
+    "android_model": "SM-S711N",
+    "android_soc": "s5e9925",
+    "android_version": "16"
+  },
+  "settings": {
+    "command": "run",
+    "models": [
+      "onnx=../sarcasm-x/onnx",
+      "onnx-int8=../sarcasm-x/onnx-int8",
+      "pruned-int8=onnx-pruned-int8"
+    ],
+    "threads": [
+      4
+    ],
+    "cooldown": 30,
+    "reference": null,
+    "device_name": "galaxy-se3",
+    "output_dir": "/root/sarcasm/results/mobile",
+    "split": "test",
+    "max_length": 256,
+    "latency_samples": 32,
+    "warmup": 10,
+    "runs": 100,
+    "no_eval": true,
+    "eval_limit": null,
+    "sustained_seconds": 0,
+    "sustained_window": 10
+  },
+  "results": [
+    {
+      "model": "onnx",
+      "model_dir": "../sarcasm-x/onnx",
+      "threads": 4,
+      "file_size_mb": 422.1971616744995,
+      "load_seconds": 1.7128206249908544,
+      "first_inference_ms": 125.61406299937516,
+      "latency_ms": {
+        "inference": {
+          "mean": 176.33946596470196,
+          "median": 165.95361300278455,
+          "p90": 242.30187903158372,
+          "p99": 274.37997212575283,
+          "min": 108.95445302594453,
+          "max": 277.610155986622,
+          "std": 44.55315272073341
+        },
+        "tokenizer": {
+          "mean": 0.5136128788581118,
+          "median": 0.4843749920837581,
+          "p90": 0.6396128912456335,
+          "p99": 0.773869112017566,
+          "min": 0.36355399060994387,
+          "max": 1.0680080158635974,
+          "std": 0.10448957944067426
+        },
+        "end_to_end": {
+          "mean": 176.85307884356007,
+          "median": 166.41373047605157,
+          "p90": 242.91804750682792,
+          "p99": 275.07921315031126,
+          "min": 109.32484403019771,
+          "max": 278.2729680184275,
+          "std": 44.63032563611388
+        }
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 103.34375,
+        "seq_len_max": 155
+      },
+      "memory_mb": {
+        "before_load": 31.578125,
+        "after_load": 510.37109375,
+        "model_load_increase": 478.79296875,
+        "peak": 582.234375
+      },
+      "temperature_after_c": {
+        "max_zone": null,
+        "battery": null
+      }
+    },
+    {
+      "model": "onnx-int8",
+      "model_dir": "../sarcasm-x/onnx-int8",
+      "threads": 4,
+      "file_size_mb": 106.24839973449707,
+      "load_seconds": 0.5472249999875203,
+      "first_inference_ms": 74.72378900274634,
+      "latency_ms": {
+        "inference": {
+          "mean": 48.2472039363347,
+          "median": 45.227383001474664,
+          "p90": 64.44803896592933,
+          "p99": 76.31296427920465,
+          "min": 29.735273972619325,
+          "max": 83.55187496636063,
+          "std": 11.727596313277097
+        },
+        "tokenizer": {
+          "mean": 0.481189782731235,
+          "median": 0.45865250285714865,
+          "p90": 0.5938122456427665,
+          "p99": 0.7766502897720785,
+          "min": 0.3033980028703809,
+          "max": 0.8085540030151606,
+          "std": 0.09552373083916603
+        },
+        "end_to_end": {
+          "mean": 48.728393719065934,
+          "median": 45.71357450913638,
+          "p90": 65.06095677032138,
+          "p99": 77.08640792930969,
+          "min": 30.106874997727573,
+          "max": 84.03976500267163,
+          "std": 11.805627614686335
+        }
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 103.34375,
+        "seq_len_max": 155
+      },
+      "memory_mb": {
+        "before_load": 31.59375,
+        "after_load": 188.9453125,
+        "model_load_increase": 157.3515625,
+        "peak": 202.1171875
+      },
+      "temperature_after_c": {
+        "max_zone": null,
+        "battery": null
+      }
+    },
+    {
+      "model": "pruned-int8",
+      "model_dir": "onnx-pruned-int8",
+      "threads": 4,
+      "file_size_mb": 106.27577590942383,
+      "load_seconds": 0.5995271489955485,
+      "first_inference_ms": 43.003514991141856,
+      "latency_ms": {
+        "inference": {
+          "mean": 51.774219173239544,
+          "median": 48.965663998387754,
+          "p90": 67.73501560674049,
+          "p99": 71.44328503985889,
+          "min": 34.68218696070835,
+          "max": 71.47843699203804,
+          "std": 10.261292620413844
+        },
+        "tokenizer": {
+          "mean": 0.49061950820032507,
+          "median": 0.46150400885380805,
+          "p90": 0.6243440147954971,
+          "p99": 0.673658672021703,
+          "min": 0.3387889591977,
+          "max": 0.8811330189928412,
+          "std": 0.09270420834716081
+        },
+        "end_to_end": {
+          "mean": 52.26483868143987,
+          "median": 49.422128504374996,
+          "p90": 68.14610906876624,
+          "p99": 72.07206696271896,
+          "min": 35.04863195121288,
+          "max": 72.10265600588173,
+          "std": 10.343061722708319
+        }
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 103.34375,
+        "seq_len_max": 155
+      },
+      "memory_mb": {
+        "before_load": 30.08984375,
+        "after_load": 198.20703125,
+        "model_load_increase": 168.1171875,
+        "peak": 206.93359375
+      },
+      "temperature_after_c": {
+        "max_zone": null,
+        "battery": null
+      }
+    }
+  ]
+}
