@@ -98,7 +98,7 @@ fine-tuning한 비꼼 탐지 모델(klue/roberta-base + KoCoSa)을 다섯 가지
 | ④ Pruning + QAT | | | | |
 | ⑤ QAT | | | | |
 
-모바일(Android) 결과는 측정한 뒤 같은 형식으로 추가한다(`MOBILE_BENCHMARK.md` (`feature/prunning_x_DynInt8` 브랜치)).
+모바일(Android) 결과는 [MOBILE_RESULTS.md](MOBILE_RESULTS.md)에 같은 형식으로 정리했다. 모바일에서는 INT8의 속도 효과가 PC보다 커서 ① 대비 3.2~3.5배 빨랐고, 최대 메모리는 약 1/3로 줄었다.
 
 ## 측정 조건
 
