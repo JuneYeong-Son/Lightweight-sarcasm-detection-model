@@ -1,0 +1,980 @@
+{
+  "timestamp": "2026-11-25T17:27:15",
+  "device": {
+    "name": "galaxy-se3",
+    "platform": "Linux-6.17.0-PRoot-Distro-aarch64-with-glibc2.43",
+    "machine": "aarch64",
+    "cpu_count": 8,
+    "cpu_max_mhz": [
+      1824,
+      1824,
+      1824,
+      1824,
+      2515,
+      2515,
+      2515,
+      2803
+    ],
+    "python": "3.14.4",
+    "versions": {
+      "onnxruntime": "1.31.1",
+      "tokenizers": "0.23.3",
+      "numpy": "2.5.4"
+    },
+    "battery": {
+      "capacity_percent": null,
+      "status": null
+    },
+    "temperature_c": {
+      "max_zone": null,
+      "battery": null
+    },
+    "android_model": "SM-S711N",
+    "android_soc": "s5e9925",
+    "android_version": "16"
+  },
+  "settings": {
+    "command": "run",
+    "models": [
+      "pruned-int8=onnx-pruned-int8",
+      "onnx-int8=../sarcasm-x/onnx-int8",
+      "onnx=../sarcasm-x/onnx"
+    ],
+    "threads": [
+      4
+    ],
+    "cooldown": 30,
+    "reference": null,
+    "device_name": "galaxy-se3",
+    "output_dir": "/root/sarcasm/results/mobile",
+    "split": "test",
+    "max_length": 256,
+    "latency_samples": 32,
+    "warmup": 10,
+    "runs": 100,
+    "no_eval": false,
+    "eval_limit": null,
+    "sustained_seconds": 120.0,
+    "sustained_window": 10
+  },
+  "results": [
+    {
+      "model": "pruned-int8",
+      "model_dir": "onnx-pruned-int8",
+      "threads": 4,
+      "file_size_mb": 106.27577590942383,
+      "load_seconds": 0.731620547012426,
+      "first_inference_ms": 49.11941400496289,
+      "latency_ms": {
+        "inference": {
+          "mean": 52.048149981419556,
+          "median": 48.78546847612597,
+          "p90": 70.60802321648225,
+          "p99": 81.72806580725602,
+          "min": 33.946015988476574,
+          "max": 100.23441404337063,
+          "std": 12.274000631930548
+        },
+        "tokenizer": {
+          "mean": 0.5125929071800783,
+          "median": 0.48140648868866265,
+          "p90": 0.6372809875756502,
+          "p99": 0.7644660951336858,
+          "min": 0.3646480035968125,
+          "max": 1.0016789892688394,
+          "std": 0.10052812809620708
+        },
+        "end_to_end": {
+          "mean": 52.560742888599634,
+          "median": 49.2542574647814,
+          "p90": 71.29905039910227,
+          "p99": 82.23595414601742,
+          "min": 34.31066399207339,
+          "max": 100.72273400146514,
+          "std": 12.34826314998984
+        }
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 103.34375,
+        "seq_len_max": 155
+      },
+      "sustained": {
+        "seconds": 120.0,
+        "window_seconds": 10.0,
+        "total_runs": 2207,
+        "first_window_median_ms": 48.56261701206677,
+        "last_window_median_ms": 49.26179599715397,
+        "slowdown_ratio": 1.0143974733674972,
+        "timeline": [
+          {
+            "t_seconds": 10.0,
+            "runs": 196,
+            "median_ms": 48.56261701206677,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1056,
+              1056,
+              1056,
+              1056,
+              2016,
+              2016,
+              2016,
+              2016
+            ]
+          },
+          {
+            "t_seconds": 20.1,
+            "runs": 191,
+            "median_ms": 48.97132801124826,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1056,
+              1056,
+              1056,
+              1056,
+              2016,
+              2016,
+              2016,
+              2016
+            ]
+          },
+          {
+            "t_seconds": 30.1,
+            "runs": 194,
+            "median_ms": 48.50353501387872,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              960,
+              960,
+              960,
+              960,
+              2304,
+              2304,
+              2304,
+              2400
+            ]
+          },
+          {
+            "t_seconds": 40.1,
+            "runs": 192,
+            "median_ms": 48.75031299889088,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              2016,
+              2016,
+              2016,
+              2016
+            ]
+          },
+          {
+            "t_seconds": 50.1,
+            "runs": 192,
+            "median_ms": 49.11625001113862,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              400,
+              400,
+              400,
+              400,
+              2016,
+              2016,
+              2016,
+              2016
+            ]
+          },
+          {
+            "t_seconds": 60.2,
+            "runs": 195,
+            "median_ms": 48.92925702733919,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              400,
+              400,
+              400,
+              400,
+              2016,
+              2016,
+              2016,
+              2016
+            ]
+          },
+          {
+            "t_seconds": 70.3,
+            "runs": 194,
+            "median_ms": 48.858280992135406,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              2016,
+              2016,
+              2016,
+              2016
+            ]
+          },
+          {
+            "t_seconds": 80.3,
+            "runs": 193,
+            "median_ms": 49.21249998733401,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              960,
+              960,
+              960,
+              960,
+              2208,
+              2208,
+              2208,
+              2400
+            ]
+          },
+          {
+            "t_seconds": 90.3,
+            "runs": 193,
+            "median_ms": 48.726601991802454,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1056,
+              1056,
+              1056,
+              1056,
+              2016,
+              2016,
+              2016,
+              2016
+            ]
+          },
+          {
+            "t_seconds": 100.3,
+            "runs": 177,
+            "median_ms": 49.1523040109314,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1536,
+              1536,
+              1536,
+              1536,
+              2112,
+              2112,
+              2112,
+              2208
+            ]
+          },
+          {
+            "t_seconds": 110.4,
+            "runs": 109,
+            "median_ms": 92.26628899341449,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1344,
+              1344,
+              1344,
+              1344,
+              2016,
+              2016,
+              2016,
+              2016
+            ]
+          },
+          {
+            "t_seconds": 120.0,
+            "runs": 181,
+            "median_ms": 49.26179599715397,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              400,
+              400,
+              400,
+              400,
+              2016,
+              2016,
+              2016,
+              2016
+            ]
+          }
+        ]
+      },
+      "eval": {
+        "split": "test",
+        "samples": 1037,
+        "accuracy": 0.7627772420443587,
+        "f1_sarcasm": 0.8150375939849624,
+        "balanced_accuracy": 0.7420338855704571,
+        "macro_f1": 0.7421962163473199,
+        "weighted_f1": 0.7494311844251186,
+        "precision_s": 0.7131578947368421,
+        "recall_s": 0.9508771929824561,
+        "precision_n": 0.8989169675090253,
+        "recall_n": 0.5331905781584583,
+        "predicted_sarcasm_ratio": 0.7328833172613307,
+        "seconds": 101.71679156302707,
+        "samples_per_second": 10.194973554169183
+      },
+      "memory_mb": {
+        "before_load": 31.5859375,
+        "after_load": 204.625,
+        "model_load_increase": 173.0390625,
+        "peak": 217.1171875
+      },
+      "temperature_after_c": {
+        "max_zone": null,
+        "battery": null
+      }
+    },
+    {
+      "model": "onnx-int8",
+      "model_dir": "../sarcasm-x/onnx-int8",
+      "threads": 4,
+      "file_size_mb": 106.24839973449707,
+      "load_seconds": 0.6812353120185435,
+      "first_inference_ms": 40.84874998079613,
+      "latency_ms": {
+        "inference": {
+          "mean": 48.9256363757886,
+          "median": 45.481269975425676,
+          "p90": 64.53485483652912,
+          "p99": 73.00624592695387,
+          "min": 31.582812953274697,
+          "max": 75.89070399990305,
+          "std": 11.515202056182286
+        },
+        "tokenizer": {
+          "mean": 0.4890780401183292,
+          "median": 0.45968699851073325,
+          "p90": 0.6072429358027875,
+          "p99": 0.7962889655027549,
+          "min": 0.35468704300001264,
+          "max": 0.9819139959290624,
+          "std": 0.09884495175644058
+        },
+        "end_to_end": {
+          "mean": 49.41471441590693,
+          "median": 45.93011751421727,
+          "p90": 65.08934763260186,
+          "p99": 73.6255861684913,
+          "min": 31.93749999627471,
+          "max": 76.54531300067902,
+          "std": 11.597415429972854
+        }
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 103.34375,
+        "seq_len_max": 155
+      },
+      "sustained": {
+        "seconds": 120.0,
+        "window_seconds": 10.0,
+        "total_runs": 2110,
+        "first_window_median_ms": 47.71347649511881,
+        "last_window_median_ms": 54.17863297043368,
+        "slowdown_ratio": 1.1354995894289168,
+        "timeline": [
+          {
+            "t_seconds": 10.6,
+            "runs": 186,
+            "median_ms": 47.71347649511881,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              576,
+              576,
+              576,
+              576
+            ]
+          },
+          {
+            "t_seconds": 20.6,
+            "runs": 151,
+            "median_ms": 49.06058596679941,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1056,
+              1056,
+              1056,
+              1056,
+              2016,
+              2016,
+              2016,
+              2016
+            ]
+          },
+          {
+            "t_seconds": 30.6,
+            "runs": 198,
+            "median_ms": 47.2503905184567,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              2016,
+              2016,
+              2016,
+              2016
+            ]
+          },
+          {
+            "t_seconds": 40.6,
+            "runs": 198,
+            "median_ms": 47.224336507497355,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              960,
+              960,
+              960,
+              960,
+              2112,
+              2112,
+              2112,
+              2304
+            ]
+          },
+          {
+            "t_seconds": 50.7,
+            "runs": 179,
+            "median_ms": 53.60246100462973,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 60.7,
+            "runs": 176,
+            "median_ms": 53.87040998903103,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 70.7,
+            "runs": 172,
+            "median_ms": 54.64126949664205,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 80.7,
+            "runs": 173,
+            "median_ms": 54.317266040015966,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              400,
+              1152,
+              1152,
+              1152,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 90.8,
+            "runs": 173,
+            "median_ms": 54.35593699803576,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              400,
+              400,
+              400,
+              400,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 100.8,
+            "runs": 172,
+            "median_ms": 54.56648449762724,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 110.9,
+            "runs": 173,
+            "median_ms": 53.90351603273302,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1056,
+              1056,
+              1056,
+              1056,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 120.0,
+            "runs": 159,
+            "median_ms": 54.17863297043368,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          }
+        ]
+      },
+      "eval": {
+        "split": "test",
+        "samples": 1037,
+        "accuracy": 0.7473481195756991,
+        "f1_sarcasm": 0.8076358296622613,
+        "balanced_accuracy": 0.7233554979525902,
+        "macro_f1": 0.7198291507861868,
+        "weighted_f1": 0.7285505470487091,
+        "precision_s": 0.6944444444444444,
+        "recall_s": 0.9649122807017544,
+        "precision_n": 0.9183673469387755,
+        "recall_n": 0.4817987152034261,
+        "predicted_sarcasm_ratio": 0.76374156219865,
+        "seconds": 59.964665976993274,
+        "samples_per_second": 17.293517492415738
+      },
+      "memory_mb": {
+        "before_load": 29.953125,
+        "after_load": 188.2265625,
+        "model_load_increase": 158.2734375,
+        "peak": 208.7578125
+      },
+      "temperature_after_c": {
+        "max_zone": null,
+        "battery": null
+      }
+    },
+    {
+      "model": "onnx",
+      "model_dir": "../sarcasm-x/onnx",
+      "threads": 4,
+      "file_size_mb": 422.1971616744995,
+      "load_seconds": 1.619975820009131,
+      "first_inference_ms": 114.53007801901549,
+      "latency_ms": {
+        "inference": {
+          "mean": 169.73694103013258,
+          "median": 159.48416001629084,
+          "p90": 225.7433203107212,
+          "p99": 255.161354028387,
+          "min": 105.09839898440987,
+          "max": 255.7362500228919,
+          "std": 41.83438941574802
+        },
+        "tokenizer": {
+          "mean": 0.511805466376245,
+          "median": 0.47810550313442945,
+          "p90": 0.6212891603354365,
+          "p99": 0.7227113080443891,
+          "min": 0.33757800702005625,
+          "max": 2.213086001574993,
+          "std": 0.19167754003895315
+        },
+        "end_to_end": {
+          "mean": 170.24874649650883,
+          "median": 159.99615198234096,
+          "p90": 226.33021877845752,
+          "p99": 255.79240558785386,
+          "min": 105.43597699142992,
+          "max": 256.409530993551,
+          "std": 41.92798714269852
+        }
+      },
+      "latency_inputs": {
+        "samples": 32,
+        "seq_len_mean": 103.34375,
+        "seq_len_max": 155
+      },
+      "sustained": {
+        "seconds": 120.0,
+        "window_seconds": 10.0,
+        "total_runs": 583,
+        "first_window_median_ms": 166.8430079589598,
+        "last_window_median_ms": 224.0023820195347,
+        "slowdown_ratio": 1.342593763801208,
+        "timeline": [
+          {
+            "t_seconds": 10.0,
+            "runs": 57,
+            "median_ms": 166.8430079589598,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              672,
+              672,
+              672,
+              672,
+              1920,
+              1920,
+              1920,
+              2016
+            ]
+          },
+          {
+            "t_seconds": 20.1,
+            "runs": 51,
+            "median_ms": 189.72480500815436,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 30.1,
+            "runs": 47,
+            "median_ms": 203.2433599815704,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 40.2,
+            "runs": 49,
+            "median_ms": 193.71933600632474,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1056,
+              1056,
+              1056,
+              1056,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 50.2,
+            "runs": 48,
+            "median_ms": 196.63796899840236,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 60.5,
+            "runs": 51,
+            "median_ms": 189.93980501545593,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              400,
+              400,
+              400,
+              400,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 70.6,
+            "runs": 49,
+            "median_ms": 197.29902397375554,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              400,
+              400,
+              400,
+              400,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 80.7,
+            "runs": 50,
+            "median_ms": 190.96218748018146,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              1824,
+              1824,
+              1824,
+              2112
+            ]
+          },
+          {
+            "t_seconds": 90.9,
+            "runs": 50,
+            "median_ms": 194.62005846435204,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1056,
+              1056,
+              1056,
+              1056,
+              1920,
+              1920,
+              1920,
+              1920
+            ]
+          },
+          {
+            "t_seconds": 101.0,
+            "runs": 46,
+            "median_ms": 203.71708952006884,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              1824,
+              1824,
+              1824,
+              1824
+            ]
+          },
+          {
+            "t_seconds": 111.0,
+            "runs": 48,
+            "median_ms": 199.61152301402763,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1152,
+              1152,
+              1152,
+              1152,
+              1824,
+              1824,
+              1824,
+              1824
+            ]
+          },
+          {
+            "t_seconds": 120.2,
+            "runs": 37,
+            "median_ms": 224.0023820195347,
+            "temperature_c": {
+              "max_zone": null,
+              "battery": null
+            },
+            "cpu_mhz": [
+              1344,
+              1344,
+              1344,
+              1344,
+              1824,
+              1824,
+              1824,
+              1824
+            ]
+          }
+        ]
+      },
+      "eval": {
+        "split": "test",
+        "samples": 1037,
+        "accuracy": 0.7512054001928641,
+        "f1_sarcasm": 0.8097345132743362,
+        "balanced_accuracy": 0.72783162402795,
+        "macro_f1": 0.7252015184756082,
+        "weighted_f1": 0.73359775614607,
+        "precision_s": 0.6984732824427481,
+        "recall_s": 0.9631578947368421,
+        "precision_n": 0.9163346613545816,
+        "recall_n": 0.4925053533190578,
+        "predicted_sarcasm_ratio": 0.7579556412729026,
+        "seconds": 219.53187230497133,
+        "samples_per_second": 4.723687677383859
+      },
+      "memory_mb": {
+        "before_load": 29.98828125,
+        "after_load": 504.87890625,
+        "model_load_increase": 474.890625,
+        "peak": 577.2421875
+      },
+      "temperature_after_c": {
+        "max_zone": null,
+        "battery": null
+      }
+    }
+  ]
+}
